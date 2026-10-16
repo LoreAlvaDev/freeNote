@@ -5,6 +5,7 @@ const notas = [
     contenido: "Esta es el contenido de mi primera nota",
     fecha: new Date(),
     autor: "Lore",
+    estado: "publicado",
     etiquetas: ["personal", "trabajo"],
   },
   {
@@ -13,15 +14,22 @@ const notas = [
     contenido: "Esta es el contenido de mi segunda nota",
     fecha: new Date(),
     autor: "Lore",
+    estado: "borrador",
     etiquetas: ["trabajo"],
   },
 ];
 const pintaNota = (nota) => console.log(nota);
 
-console.log("las notas");
+console.log("Todas las notas");
 
-notas.map((nota) => pintaNota(nota));
+// notas.map((nota) => pintaNota(nota));
+for (let nota of notas) {
+  pintaNota(nota);
+}
 
-console.log(" las notas personal");
-let filtered = notas.filter((nota) => nota.etiquetas.includes("personal"));
-filtered.map((nota) => pintaNota(nota));
+console.log(" las notas publicadas");
+// let filtered = notas.filter((nota) => nota.etiquetas.includes("personal"));
+// filtered.map((nota) => pintaNota(nota));
+for (let nota of notas) {
+  if (nota.estado === "publicado") pintaNota(nota);
+}
