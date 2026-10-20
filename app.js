@@ -1,46 +1,7 @@
-// //estructura de una nota
-// // id - tipo UID
-// // titulo - tipo String
-// // contenido - tipo String
-// // fecha - tipo Date
-// // autor - tipo String, tal vez una enumeración
-// // estado - tipo String, una enumeración
-// // etiquetas- array de String
-
-// const notasIni = [
-//   {
-//     id: 1,
-//     titulo: "Mi primera nota",
-//     contenido: "Esta es el contenido de mi primera nota",
-//     fecha: new Date(),
-//     autor: "Lore",
-//     estado: "publicado",
-//     etiquetas: ["personal", "trabajo"],
-//   },
-//   {
-//     id: 2,
-//     titulo: "Mi segunda nota",
-//     contenido: `Esta es el contenido de mi segunda nota`,
-//     fecha: new Date(),
-//     autor: "Lore",
-//     estado: "borrador",
-//     etiquetas: ["trabajo"],
-//   },
-// ];
-
-// const notaBase = {
-//   id: new Date().getMilliseconds(),
-//   titulo: "",
-//   contenido: "",
-//   fecha: new Date(),
-//   autor: "Anónimo",
-//   estado: "borrador",
-//   etiquetas: [],
-// };
-
 // ============================================
 // SISTEMA DE NOTAS MARKDOWN
 // ============================================
+const STORAGE_KEY = "lorenotes";
 
 // --------------------------------------------
 // UTILIDADES DE TEXTO
@@ -342,6 +303,33 @@ function createNotesStore() {
     getFavoriteNotes: getFavoriteNotes,
     getNotesCount: getNotesCount,
   };
+}
+
+/**
+ * Guarda las notas en LocalStorage
+ * @param {Array} notes -Array de notas a guardar
+ */
+function saveToStorage(notes) {
+  if (!notes) {
+    console.error("No se pudieron guardar las notas.");
+  }
+  const notesJson = JSON.stringify(notes);
+  localStorage.setItem(STORAGE_KEY, notesJson);
+}
+
+/**
+ * Carga las notas desde LocalStorage
+ * @returns{Array} array de notas o vacío si no hay datos
+ */
+function loadFromStorage() {
+  const notesJson = localStorage.getItem(STORAGE_KEY);
+  if (!notesJson) return [];
+  let notes = [];
+  const parsedNotes = JSON.parse(notesJson);
+  if (Array.isArray(parsedNotes)) {
+    notes = parsedNotes;
+  }
+  return notes;
 }
 
 // Ejemplo 1: Crear una nota
